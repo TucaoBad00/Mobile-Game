@@ -11,9 +11,10 @@ public class touchControl : MonoBehaviour
     public bool canRun;
     public Vector2 pastPosition;
     public GameObject endScreen;
+    public AnimationManager animationManager;
     void Start()
     {
-        //ScpCollider.GetComponentInChildren<PlayerCollider>();
+        animationManager.Play(AnimationManager.AnimationTypes.IDLE);
     }
 
     // Update is called once per frame
@@ -38,14 +39,20 @@ public class touchControl : MonoBehaviour
     }
     public void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            canRun = false;
-            endScreen.SetActive(true);
+            EndGame();
         }
     }
     public void StartGame()
     {
         canRun = true;
+        animationManager.Play(AnimationManager.AnimationTypes.RUN);
+    }
+    public void EndGame()
+    {
+            canRun = false;
+            endScreen.SetActive(true);
+            animationManager.Play(AnimationManager.AnimationTypes.DEAD);
     }
 }
