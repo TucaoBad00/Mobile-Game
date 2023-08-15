@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class touchControl : MonoBehaviour
+
+public class touchControl : Singleton
 {
     public GameObject PlayerController;
     public GameObject PlayerCharacter;
@@ -12,9 +13,10 @@ public class touchControl : MonoBehaviour
     public Vector2 pastPosition;
     public GameObject endScreen;
     public AnimationManager animationManager;
+
     void Start()
     {
-        animationManager.Play(AnimationManager.AnimationTypes.IDLE);
+        animationManager.Play(AnimationManager.AnimationTypes.IDLE);    
     }
 
     // Update is called once per frame
@@ -55,4 +57,26 @@ public class touchControl : MonoBehaviour
             endScreen.SetActive(true);
             animationManager.Play(AnimationManager.AnimationTypes.DEAD);
     }
+    #region POWERUPS
+    #region Jump
+    public void JumpPowerStart(float s)
+    {
+        PlayerController.transform.position = new Vector3(PlayerController.transform.position.x, PlayerController.transform.position.y + 4, PlayerController.transform.position.z);
+        speedOnLevel += s;
+    }
+    public void JumpPowerEnd(float s)
+    {
+        PlayerController.transform.position = new Vector3(PlayerController.transform.position.x, PlayerController.transform.position.y - 4, PlayerController.transform.position.z);
+        speedOnLevel -= s;
+    }
+    #endregion
+    public void SpeedUpPowerStart(float f)
+    {
+        speedOnLevel += f;
+    }
+    public void SpeedUpPowerEnd(float f)
+    {
+        speedOnLevel -= f;
+    }
+    #endregion
 }
