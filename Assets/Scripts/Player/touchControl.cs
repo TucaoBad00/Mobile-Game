@@ -13,10 +13,13 @@ public class touchControl : Singleton
     public Vector2 pastPosition;
     public GameObject endScreen;
     public AnimationManager animationManager;
+    public ScaleAnimation scaleAnimation;
+    private bool died;
 
     void Start()
     {
-        animationManager.Play(AnimationManager.AnimationTypes.IDLE);    
+        animationManager.Play(AnimationManager.AnimationTypes.IDLE);
+        scaleAnimation.Animations[0].Tween();
     }
 
     // Update is called once per frame
@@ -44,6 +47,13 @@ public class touchControl : Singleton
         if (collision.gameObject.CompareTag("Enemy"))
         {
             EndGame();
+            if(!died)
+            {
+                scaleAnimation.Animations[2].Tween();
+                died = true;
+            }
+                
+                
         }
     }
     public void StartGame()
@@ -53,9 +63,10 @@ public class touchControl : Singleton
     }
     public void EndGame()
     {
-            canRun = false;
-            endScreen.SetActive(true);
-            animationManager.Play(AnimationManager.AnimationTypes.DEAD);
+        canRun = false;
+        endScreen.SetActive(true);
+        animationManager.Play(AnimationManager.AnimationTypes.DEAD);
+        
     }
     #region POWERUPS
     #region Jump

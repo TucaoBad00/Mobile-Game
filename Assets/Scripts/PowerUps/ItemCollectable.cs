@@ -7,8 +7,10 @@ public class ItemCollectable : MonoBehaviour
     public ParticleSystem particle;
     public float timeToHide;
     public GameObject graphicItem;
+    public ScaleAnimation scaleAnimation;
     [Header("Sounds")]
     public AudioSource audioSource;
+    
     // Start is called before the first frame update
     public void OnTriggerEnter(Collider other)
     {
@@ -28,6 +30,7 @@ public class ItemCollectable : MonoBehaviour
     {
         if (particle != null) particle.Play();
         if (audioSource != null) audioSource.Play();
+        scaleAnimation.Animations[1].Tween();
     }
     void Start()
     {
