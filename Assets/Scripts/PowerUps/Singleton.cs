@@ -5,7 +5,7 @@ using UnityEngine;
 public class Singleton : MonoBehaviour
 {
     public static Singleton Instance;
-    public void Awake()
+    public virtual void Awake()
     {
         if (Instance == null)
             Instance = this;

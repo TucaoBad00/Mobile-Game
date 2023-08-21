@@ -14,8 +14,13 @@ public class touchControl : Singleton
     public GameObject endScreen;
     public AnimationManager animationManager;
     public ScaleAnimation scaleAnimation;
+    public ParticleSystem deadParticle;
     private bool died;
-
+    public override void Awake()
+    {
+        base.Awake();
+        transform.localScale = new Vector3(0, 0, 0);
+    }
     void Start()
     {
         animationManager.Play(AnimationManager.AnimationTypes.IDLE);
@@ -46,9 +51,10 @@ public class touchControl : Singleton
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            EndGame();
+            
             if(!died)
             {
+                EndGame();
                 scaleAnimation.Animations[2].Tween();
                 died = true;
             }
@@ -66,7 +72,9 @@ public class touchControl : Singleton
         canRun = false;
         endScreen.SetActive(true);
         animationManager.Play(AnimationManager.AnimationTypes.DEAD);
-        
+        deadParticle.Play();
+
+
     }
     #region POWERUPS
     #region Jump
